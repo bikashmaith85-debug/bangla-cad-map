@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Android phone/tablet first, responsive laptop-ready Bangla CAD map prototype">
-<title>বাংলা ক্যাড ম্যাপ প্রো — প্রোটোটাইপ ২.০</title>
+<title>বাংলা ক্যাড ম্যাপ প্রো — প্রোটোটাইপ ২.৪</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <style>
 :root{--navy:#17324d;--blue:#1769aa;--bg:#f2f5f8;--line:#d5dee7;--green:#167a55}*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans Bengali','Nirmala UI','Vrinda',system-ui,sans-serif;font-feature-settings:normal;font-kerning:normal;text-rendering:optimizeLegibility;background:var(--bg);color:#152536}.top{background:var(--navy);color:white;padding:14px 16px}.top h1{font-size:20px;margin:0 0 4px}.top p{font-size:12px;margin:0;opacity:.9}.wrap{display:grid;grid-template-columns:310px 1fr;gap:12px;padding:12px;max-width:1400px;margin:auto}.panel,.workspace{background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 2px 8px #17324d0c}.panel{padding:12px;max-height:calc(100vh - 100px);overflow:auto}.section{border-bottom:1px solid var(--line);padding:0 0 12px;margin-bottom:12px}.section:last-child{border:0}.section h2{font-size:14px;margin:0 0 9px;color:var(--navy)}label{font-size:12px;display:block;margin:8px 0 4px;color:#4b5b6c}input,select,button,textarea{font:inherit}input[type=text],input[type=number],select,textarea{font-size:16px;line-height:1.5;font-family:'Noto Sans Bengali','Nirmala UI','Vrinda',system-ui,sans-serif;font-feature-settings:normal}input[type=text],input[type=number],select{width:100%;border:1px solid #c6d1dc;border-radius:7px;padding:8px;background:white;color:#182a3b}input[type=file]{width:100%;font-size:12px}input[type=color]{height:34px;width:100%;padding:2px;border:1px solid #c6d1dc;border-radius:7px;background:white}button{border:0;border-radius:7px;padding:9px 10px;background:var(--blue);color:white;font-size:12px;font-weight:600;cursor:pointer;margin:3px 2px 0 0}button.secondary{background:#e7eef5;color:#18324c}button.green{background:var(--green)}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btnrow{display:flex;flex-wrap:wrap}.workspace{min-width:0;padding:10px;display:flex;flex-direction:column}.toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:0 0 9px}.toolbar button{margin:0}.status{font-size:12px;color:#526476;margin-left:auto}.canvasbox{background:#e8edf2;border:1px solid #c8d2dc;border-radius:8px;overflow:hidden;flex:1;min-height:400px;display:flex;align-items:center;justify-content:center}canvas{display:block;max-width:100%;max-height:calc(100vh - 190px);touch-action:pan-y;background:white;font-family:'Noto Sans Bengali','Nirmala UI','Vrinda',system-ui,sans-serif}.hint{font-size:12px;line-height:1.5;color:#5b6b7b;margin-top:8px}.badge{display:inline-block;background:#e6f3ed;color:#176748;border-radius:5px;padding:3px 6px;font-size:11px}.metrics{font-size:12px;background:#f5f8fb;border-radius:7px;padding:8px;margin-top:8px;line-height:1.7}.hidden{display:none!important}@media(max-width:850px){.wrap{grid-template-columns:1fr}.panel{max-height:none;order:2}.workspace{order:1}.canvasbox{min-height:300px}canvas{max-height:55vh}.status{width:100%;margin:3px 0 0}}
@@ -85,7 +85,17 @@ input[type=range]{width:100%;min-height:32px}
  </div>
  <div class="mc-note"><b>বাস্তবায়নের সীমা:</b> এই সংস্করণে ড্যাশবোর্ডের বোতাম, ডেমো কর্মী, অনুমতি-অবস্থার পরিবর্তন ও লগ এই ব্রাউজারে পরীক্ষা করা যাবে। একাধিক ফোনে লিংক, প্রকৃত লাইভ GPS, ভিডিও কল/রেকর্ডিং, সার্ভার-সুরক্ষিত অনুমতি এবং স্বয়ংক্রিয় সতর্কতা চালাতে পরবর্তী ধাপে লগইন, ডেটাবেস/ব্যাকএন্ড ও ভিডিও পরিষেবা যুক্ত করতে হবে। ট্র্যাকিং/রেকর্ডিং চালু থাকলে কর্মীকে স্পষ্টভাবে জানাতে ও প্রয়োজনীয় সম্মতি নিতে হবে।</div>
 </section>
-<section class="section" style="margin:4px 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px"><h2>লাইভ ম্যাপ — স্যাটেলাইট / হাইব্রিড / র‍্যাস্টার</h2><div class="map-controls"><button id="mapSatellite" class="green">স্যাটেলাইট ম্যাপ</button><button id="mapHybrid" class="secondary">হাইব্রিড ম্যাপ</button><button id="mapRaster" class="secondary">র‍্যাস্টার ছবি</button></div><div class="row"><div><label>নিজের র‍্যাস্টার ছবি (JPG/PNG/WebP)</label><input id="rasterFile" type="file" accept="image/png,image/jpeg,image/webp"></div><div><label>র‍্যাস্টার স্বচ্ছতা: <span id="rasterOpacityLabel">70%</span></label><input id="rasterOpacity" type="range" min="10" max="100" value="70" step="5"><button id="mapLocate" class="green">আমার বর্তমান GPS অবস্থান দেখান</button></div></div><div id="liveMap"></div><div class="metrics" id="liveMapStatus">ম্যাপ লোড করতে ইন্টারনেট প্রয়োজন। প্রথমে স্যাটেলাইট বা হাইব্রিড নির্বাচন করুন; লাইভ GPS বিন্দু দেখাতে Location অনুমতি দিন এবং “আমার বর্তমান GPS অবস্থান দেখান” চাপুন।</div><div class="hint">স্যাটেলাইট/হাইব্রিড টাইল: Esri World Imagery ও Reference labels; Google Maps নয়। র‍্যাস্টার মোডে আপনার নির্বাচিত ছবিটি ম্যাপের ওপর ওভারলে হিসেবে বসে—নির্ভুল জমি মাপের জন্য ছবিটির জিওরেফারেন্স/সীমানা মিলিয়ে নিতে হবে। ইমেজারি রিয়েল-টাইম নয় এবং সব এলাকার আপডেটের তারিখ এক নয়।</div></section>
+<section class="section" style="margin:4px 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px"><h2>লাইভ ম্যাপ — স্যাটেলাইট / হাইব্রিড / র‍্যাস্টার</h2><div class="map-controls"><button id="mapSatellite" class="green">স্যাটেলাইট ম্যাপ</button><button id="mapHybrid" class="secondary">হাইব্রিড ম্যাপ</button><button id="mapRaster" class="secondary">র‍্যাস্টার ছবি</button></div><div class="row rrow"><div><label>নিজের র‍্যাস্টার ছবি (JPG/PNG/WebP)</label><input id="rasterFile" type="file" accept="image/png,image/jpeg,image/webp"></div><div><label>র‍্যাস্টার স্বচ্ছতা: <span id="rasterOpacityLabel">70%</span></label><input id="rasterOpacity" type="range" min="10" max="100" value="70" step="5"><button id="mapLocate" class="green">আমার বর্তমান GPS অবস্থান দেখান</button><button id="mapCenter" class="secondary" style="margin-top:6px">📍 আমার অবস্থানে যাও</button><button id="mapManual" class="secondary" style="margin-top:6px">GPS না এলে: ম্যাপে ট্যাপ করে অবস্থান বসান</button></div></div><div class="metrics" id="liveMapStatus" style="margin:10px 0;border:2px solid #087cff">ম্যাপ লোড করতে ইন্টারনেট প্রয়োজন। প্রথমে স্যাটেলাইট বা হাইব্রিড নির্বাচন করুন; লাইভ GPS বিন্দু দেখাতে Location অনুমতি দিন এবং “আমার বর্তমান GPS অবস্থান দেখান” চাপুন।</div><div class="metrics" id="gpsDiag" style="margin:6px 0;font-size:13px"></div><div id="liveMap"></div>
+<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট</h2>
+<div class="hint" style="margin-top:0">কোণায় দাঁড়ান → বোতাম চাপুন → কয়েক সেকেন্ড স্থির থাকুন → পরের কোণায় যান। পয়েন্টগুলো ওপরের ম্যাপেও আঁকা হবে।</div>
+<div class="row"><div><label>প্রতি পয়েন্টে সময়</label><select id="bdSec"><option value="5" selected>৫ সেকেন্ড</option><option value="8">৮ সেকেন্ড</option><option value="10">১০ সেকেন্ড</option></select></div></div>
+<div class="btnrow"><button id="bdGo" class="green" style="font-size:18px;padding:14px 16px;width:100%">পয়েন্ট নিন</button></div>
+<div style="height:8px;background:#d5dee7;border-radius:6px;overflow:hidden;margin:6px 0"><i id="bdBar" style="display:block;height:100%;width:0;background:#e0a100"></i></div>
+<div class="metrics" id="bdStatus">প্রস্তুত। প্রথম কোণায় দাঁড়িয়ে “পয়েন্ট নিন” চাপুন।</div>
+<div class="metrics" id="bdSum"></div>
+<div style="overflow-x:auto"><table class="mc-table" style="width:100%"><thead><tr><th>পয়েন্ট</th><th>ভুলের সীমা</th><th>পরের দিকের দৈর্ঘ্য</th></tr></thead><tbody id="bdRows"></tbody></table></div>
+<div class="btnrow"><button id="bdUndo" class="secondary">শেষ পয়েন্ট বাদ দিন</button><button id="bdCsv" class="blue">CSV সংরক্ষণ</button><button id="bdClr" class="secondary">সব মুছুন</button></div>
+<div class="hint">৫ সেকেন্ডের গড় GPS-এর কাঁপুনি কমায়, কিন্তু ফোনের GPS-এ সাধারণত ১–৩ মিটার ভুল থাকে; ইঞ্চি-নির্ভুল নয়। আইনি/চূড়ান্ত মাপে ফিতা বা সার্ভেয়ার ব্যবহার করুন।</div></div><div class="hint">স্যাটেলাইট/হাইব্রিড টাইল: Esri World Imagery ও Reference labels; Google Maps নয়। র‍্যাস্টার মোডে আপনার নির্বাচিত ছবিটি ম্যাপের ওপর ওভারলে হিসেবে বসে—নির্ভুল জমি মাপের জন্য ছবিটির জিওরেফারেন্স/সীমানা মিলিয়ে নিতে হবে। ইমেজারি রিয়েল-টাইম নয় এবং সব এলাকার আপডেটের তারিখ এক নয়।</div></section>
 <div class="toolbar"><button id="fit" class="secondary">ছবি ফিট করুন</button><button id="reset" class="secondary">নতুন ক্যানভাস</button><span class="badge">Prototype 1.6 • Master Control • Access approval demo</span><span class="status" id="status">ছবি যোগ করুন অথবা খালি ক্যানভাসে আঁকুন</span></div><div class="canvasbox"><canvas id="canvas" width="1000" height="700"></canvas></div>
 <div class="section" style="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:10px"><h2>ঐতিহাসিক ছবি তুলনা — পাশাপাশি বা স্বচ্ছ ওভারলে</h2><div class="row"><div><label>পুরোনো বছরের ছবি (JPG/PNG/WebP)</label><input id="compareAFile" type="file" accept="image/png,image/jpeg,image/webp"><label>ছবির বছর/তারিখ (ঐচ্ছিক)</label><input id="compareAYear" type="text" placeholder="যেমন 2015"></div><div><label>নতুন বছরের ছবি (JPG/PNG/WebP)</label><input id="compareBFile" type="file" accept="image/png,image/jpeg,image/webp"><label>ছবির বছর/তারিখ (ঐচ্ছিক)</label><input id="compareBYear" type="text" placeholder="যেমন 2025"></div></div><div class="btnrow"><button id="compareSide" class="secondary">পাশাপাশি তুলনা</button><button id="compareOverlay" class="secondary">ওভারলে তুলনা</button></div><label>ওভারলে স্বচ্ছতা: <span id="compareOpacityLabel">50%</span></label><input id="compareOpacity" type="range" min="0" max="100" value="50" step="5"><div id="compareStatus" class="hint">তুলনা করতে দুইটি ঐতিহাসিক ছবি নির্বাচন করুন। ছবিগুলি একই এলাকার ও কাছাকাছি স্কেলের হলে তুলনা ভালো হবে।</div><div id="compareView" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"></div><div class="hint">এটি আপনার বেছে নেওয়া দুইটি স্থানীয় ছবির ভিজ্যুয়াল তুলনা; স্বয়ংক্রিয়ভাবে কোনো বছরের স্যাটেলাইট ডেটা আনা হয় না। তুলনার ছবিগুলি জিওরেফারেন্স/জমির সীমানার নির্ভুলতা যাচাই করে না।</div></div><div class="hint">এটি প্রথম UI/ফিচার প্রোটোটাইপ, পূর্ণ CAD ইঞ্জিন নয়। বাস্তব জমির মাপ পেতে সঠিক ক্যালিব্রেশন আবশ্যক।</div></main>
 </div>
@@ -292,7 +302,8 @@ $('exportPng').onclick=()=>{draw();const a=document.createElement('a');a.downloa
 ['ppm','gridStep','gridUnit','gridColor','gridWidth','lengthUnit','areaUnit','drawColor','fontSize'].forEach(id=>$(id).addEventListener('input',draw));
 window.addEventListener('resize',resizeCanvas);resizeCanvas();draw();
 </script>
-<style>@media print{body{background:white}.top,.panel,.toolbar,.workspace>.hint{display:none!important}.wrap{display:block;padding:0}.workspace{border:0;padding:0;box-shadow:none}.canvasbox{border:0;display:block;overflow:visible}canvas{width:100%!important;height:auto!important;max-height:none!important;max-width:100%!important}}</style>
+<style>@media(max-width:700px){.rrow{grid-template-columns:1fr!important}}
+@media print{body{background:white}.top,.panel,.toolbar,.workspace>.hint{display:none!important}.wrap{display:block;padding:0}.workspace{border:0;padding:0;box-shadow:none}.canvasbox{border:0;display:block;overflow:visible}canvas{width:100%!important;height:auto!important;max-height:none!important;max-width:100%!important}}</style>
 <script>
 
 // Master Control Dashboard v1.6 — local UI prototype only; not connected to a backend.
@@ -343,7 +354,7 @@ window.addEventListener('resize',resizeCanvas);resizeCanvas();draw();
 (function initLiveMap(){
  const status=document.getElementById('liveMapStatus');
  if(!window.L){status.textContent='ম্যাপ লাইব্রেরি লোড হয়নি। ইন্টারনেট চালু করে পেজটি আবার খুলুন।';return;}
- const map=L.map('liveMap',{zoomControl:true}).setView([22.5726,88.3639],12);
+ const map=L.map('liveMap',{zoomControl:true}).setView([22.5726,88.3639],12);window.__liveMap=map;
  const imagery=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
  const labels=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Labels © Esri'});
  let raster=null, gpsMarker=null, accuracyCircle=null, rasterUrl=null; imagery.addTo(map);
@@ -354,11 +365,101 @@ window.addEventListener('resize',resizeCanvas);resizeCanvas();draw();
  document.getElementById('mapSatellite').onclick=()=>mode('satellite');document.getElementById('mapHybrid').onclick=()=>mode('hybrid');document.getElementById('mapRaster').onclick=()=>mode('raster');
  document.getElementById('rasterFile').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(rasterUrl)URL.revokeObjectURL(rasterUrl);rasterUrl=URL.createObjectURL(f);const bounds=map.getBounds();if(raster)map.removeLayer(raster);raster=L.imageOverlay(rasterUrl,bounds,{opacity:Number(document.getElementById('rasterOpacity').value)/100});mode('raster');});
  document.getElementById('rasterOpacity').addEventListener('input',e=>{document.getElementById('rasterOpacityLabel').textContent=e.target.value+'%';if(raster)raster.setOpacity(Number(e.target.value)/100);});
- let mapWatchId=null;
- function showLivePosition(pos,centerMap){const lat=pos.coords.latitude,lon=pos.coords.longitude,acc=Number.isFinite(pos.coords.accuracy)?pos.coords.accuracy:0;const ll=[lat,lon];if(!gpsMarker){gpsMarker=L.circleMarker(ll,{radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1}).addTo(map).bindPopup('আপনার লাইভ GPS অবস্থান');}else gpsMarker.setLatLng(ll);gpsMarker.setStyle({radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1});gpsMarker.setPopupContent('🔵 আপনার লাইভ GPS অবস্থান<br>Latitude: '+lat.toFixed(7)+'<br>Longitude: '+lon.toFixed(7)+'<br>আনুমানিক নির্ভুলতা: ±'+Math.round(acc)+' মিটার');if(!accuracyCircle){accuracyCircle=L.circle(ll,{radius:Math.max(1,acc),color:'#087cff',weight:1,fillColor:'#087cff',fillOpacity:.10}).addTo(map);}else accuracyCircle.setLatLng(ll).setRadius(Math.max(1,acc));if(centerMap)map.setView(ll,Math.max(map.getZoom(),17));status.textContent='🔵 লাইভ GPS চালু — Latitude '+lat.toFixed(7)+', Longitude '+lon.toFixed(7)+', Accuracy ±'+Math.round(acc)+' মিটার। অবস্থান আপডেট হচ্ছে।';}
- document.getElementById('mapLocate').onclick=()=>{if(!navigator.geolocation){status.textContent='এই ব্রাউজারে GPS/Geolocation সমর্থিত নয়। HTTPS বা অনুমোদিত Android WebView-তে খুলুন।';return;}if(mapWatchId!==null){navigator.geolocation.clearWatch(mapWatchId);mapWatchId=null;document.getElementById('mapLocate').textContent='আমার বর্তমান GPS অবস্থান দেখান';status.textContent='লাইভ GPS বন্ধ হয়েছে। আবার বোতাম চাপলে চালু হবে।';return;}status.textContent='লাইভ GPS অবস্থান খোঁজা হচ্ছে… Location অনুমতি দিন এবং বাইরে/খোলা আকাশের নিচে চেষ্টা করুন।';document.getElementById('mapLocate').textContent='লাইভ GPS বন্ধ করুন';if(!window.isSecureContext && location.protocol!=='file:'){status.textContent='⚠️ নিরাপদ HTTPS পরিবেশ নয়; GPS অনুমতি বা অবস্থান ব্যর্থ হতে পারে।';}mapWatchId=navigator.geolocation.watchPosition(pos=>showLivePosition(pos,true),err=>{status.textContent='GPS পাওয়া যায়নি: '+({1:'অ্যাপ/ব্রাউজারের Location অনুমতি দিন।',2:'অবস্থান পাওয়া যায়নি। ডিভাইসের Location চালু করে বাইরে চেষ্টা করুন।',3:'GPS অনুরোধের সময় শেষ হয়েছে; অপেক্ষা করুন বা আবার চালু করুন।'}[err.code]||err.message)+' Android Settings-এ Location চালু আছে কি না দেখুন।';if(err.code===1){navigator.geolocation.clearWatch(mapWatchId);mapWatchId=null;document.getElementById('mapLocate').textContent='আমার বর্তমান GPS অবস্থান দেখান';}},{enableHighAccuracy:true,maximumAge:0,timeout:60000});};
+ let mapWatchId=null,lastLL=null;
+ function showLivePosition(pos,centerMap){const lat=pos.coords.latitude,lon=pos.coords.longitude,acc=Number.isFinite(pos.coords.accuracy)?pos.coords.accuracy:0;const ll=[lat,lon];lastLL=ll;if(!gpsMarker){gpsMarker=L.circleMarker(ll,{radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1}).addTo(map).bindPopup('আপনার লাইভ GPS অবস্থান');}else gpsMarker.setLatLng(ll);gpsMarker.setStyle({radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1});gpsMarker.setPopupContent('🔵 আপনার লাইভ GPS অবস্থান<br>Latitude: '+lat.toFixed(7)+'<br>Longitude: '+lon.toFixed(7)+'<br>আনুমানিক নির্ভুলতা: ±'+Math.round(acc)+' মিটার');if(!accuracyCircle){accuracyCircle=L.circle(ll,{radius:Math.max(1,acc),color:'#087cff',weight:1,fillColor:'#087cff',fillOpacity:.10}).addTo(map);}else accuracyCircle.setLatLng(ll).setRadius(Math.max(1,acc));if(centerMap)map.setView(ll,Math.max(map.getZoom(),17));status.textContent='🔵 লাইভ GPS চালু — Latitude '+lat.toFixed(7)+', Longitude '+lon.toFixed(7)+', Accuracy ±'+Math.round(acc)+' মিটার। অবস্থান আপডেট হচ্ছে।';}
+ 
+ const diag=document.getElementById('gpsDiag'),locBtn=document.getElementById('mapLocate');
+ function showDiag(){const show=t=>{diag.textContent=t;diag.style.display=t?'':'none';};if(!window.isSecureContext){show('⚠️ নিরাপদ (HTTPS) সংযোগ নেই — GPS কাজ নাও করতে পারে।');return;}show('');if(navigator.permissions&&navigator.permissions.query){navigator.permissions.query({name:'geolocation'}).then(r=>{const f=()=>show(r.state==='denied'?'🚫 Location অনুমতি বন্ধ আছে। Chrome সেটিংস থেকে Allow করুন।':r.state==='prompt'?'ℹ️ বোতাম চাপলে Location অনুমতি চাইবে — Allow দিন।':'');f();r.onchange=f;}).catch(()=>{});}}
+ showDiag();
+ function stopLive(){if(mapWatchId!==null){navigator.geolocation.clearWatch(mapWatchId);mapWatchId=null;}locBtn.textContent='আমার বর্তমান GPS অবস্থান দেখান';}
+ function gpsError(err){const m={1:'Location অনুমতি পাওয়া যায়নি। Chrome ⋮ → Settings → Site settings → Location থেকে Allow করুন, এবং ফোন/ট্যাবলেটের Location চালু করুন।',2:'অবস্থান পাওয়া যায়নি। ডিভাইসের Location চালু করে খোলা জায়গায় চেষ্টা করুন।',3:'সময় শেষ হয়েছে। আবার চেষ্টা করুন।'}[err.code]||err.message;let extra='';if(!window.isSecureContext)extra=' ⚠️ পেজটি HTTPS-এ নেই, তাই Chrome GPS আটকে দিচ্ছে। সফটওয়্যারটি GitHub Pages-এর https:// ঠিকানা থেকে খুলুন।';status.textContent='❌ GPS ব্যর্থ: '+m+extra;if(err.code===1)stopLive();}
+ locBtn.onclick=()=>{
+  if(mapWatchId!==null){stopLive();status.textContent='লাইভ GPS বন্ধ হয়েছে।';return;}
+  showDiag();
+  if(!navigator.geolocation){status.textContent='❌ এই ব্রাউজারে GPS/Location সুবিধা নেই। Android Chrome-এ খুলুন।';return;}
+  if(!window.isSecureContext){status.textContent='❌ GPS-এর জন্য HTTPS দরকার। GitHub Pages-এর https:// ঠিকানা থেকে খুলুন; file:// বা content:// থেকে GPS কাজ নাও করতে পারে।';return;}
+  firstFix=true;
+  status.textContent='⏳ উচ্চ-নির্ভুলতার লাইভ GPS খোঁজা হচ্ছে… Location অনুমতি চাইলে Allow দিন। খোলা আকাশের নিচে থাকলে দ্রুত ফিক্স পাওয়া যায়।';
+  locBtn.textContent='লাইভ GPS বন্ধ করুন';
+  // Watch is the source of truth; reject stale cached positions and request high accuracy.
+  try {
+   mapWatchId=navigator.geolocation.watchPosition(p=>{
+    showLivePosition(p,mapFirst());
+   },gpsError,{enableHighAccuracy:true,maximumAge:0,timeout:60000});
+   // One-shot high accuracy request helps surface a clear first-fix error on some browsers.
+   navigator.geolocation.getCurrentPosition(p=>showLivePosition(p,true),e=>{
+    if(e.code===1||mapWatchId===null)gpsError(e);
+    else if(e.code===2||e.code===3)status.textContent='⏳ GPS এখনও ফিক্স পায়নি। Location চালু রাখুন, খোলা আকাশের নিচে অপেক্ষা করুন; লাইভ চেষ্টা চলছে। ('+({2:'অবস্থান সাময়িকভাবে অনুপলব্ধ',3:'প্রথম রিডিং পেতে সময় লাগছে'}[e.code]||'')+')';
+   },{enableHighAccuracy:true,maximumAge:0,timeout:30000});
+  } catch(e){stopLive();status.textContent='❌ GPS চালু করা যায়নি: '+(e.message||'ব্রাউজারের Location সেটিং পরীক্ষা করুন।');}
+ };
+ document.getElementById('mapCenter').onclick=()=>{if(lastLL){map.setView(lastLL,Math.max(map.getZoom(),17));}else{status.textContent='এখনো কোনো GPS অবস্থান পাওয়া যায়নি। আগে “আমার বর্তমান GPS অবস্থান দেখান” চাপুন।';}};
+ let firstFix=true;function mapFirst(){if(firstFix){firstFix=false;return true}return false}
+ // হাতে ট্যাপ করে অবস্থান বসানো (GPS না এলে বিকল্প)
+ let manualMode=false,manualMarker=null;
+ document.getElementById('mapManual').onclick=()=>{manualMode=!manualMode;document.getElementById('mapManual').textContent=manualMode?'ম্যাপে ট্যাপ করুন… (বন্ধ করতে আবার চাপুন)':'GPS না এলে: ম্যাপে ট্যাপ করে অবস্থান বসান';status.textContent=manualMode?'👆 ম্যাপে যেখানে আছেন সেখানে ট্যাপ করুন।':'হাতে বসানো মোড বন্ধ।';};
+ map.on('click',e=>{if(!manualMode)return;const ll=e.latlng;if(manualMarker)manualMarker.setLatLng(ll);else manualMarker=L.circleMarker(ll,{radius:9,color:'#fff',weight:3,fillColor:'#e11d48',fillOpacity:1}).addTo(map);manualMarker.bindPopup('📌 হাতে বসানো অবস্থান<br>Lat: '+ll.lat.toFixed(7)+'<br>Lon: '+ll.lng.toFixed(7)).openPopup();status.textContent='📌 হাতে বসানো বিন্দু — Latitude '+ll.lat.toFixed(7)+', Longitude '+ll.lng.toFixed(7)+' (এটি GPS রিডিং নয়)';});
  setTimeout(()=>map.invalidateSize(),300);window.addEventListener('resize',()=>map.invalidateSize());
 })();
 
+</script>
+<script>
+(function(){
+var pts=[],busy=false,$=function(i){return document.getElementById(i)};
+var layer=null;
+function bn(x,d){return Number(x).toLocaleString('bn-BD',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function save(){try{localStorage.setItem('bdPoints',JSON.stringify(pts))}catch(e){}}
+try{var z=localStorage.getItem('bdPoints');if(z)pts=JSON.parse(z)||[]}catch(e){pts=[]}
+function proj(){if(!pts.length)return[];var la0=pts[0].la,lo0=pts[0].lo,k=Math.cos(la0*Math.PI/180);return pts.map(function(p){return{x:(p.lo-lo0)*111320*k,y:(p.la-la0)*110574}})}
+function draw(fit){
+  var q=proj(),n=pts.length,per=0,A=0,rows='';
+  for(var i=0;i<n;i++){var j=(i+1)%n,d=Math.hypot(q[j].x-q[i].x,q[j].y-q[i].y);if(n>1){per+=d;A+=q[i].x*q[j].y-q[j].x*q[i].y}
+    var side=n>1&&(i<n-1||n>2)?bn(d,2)+' মি ('+bn(d*3.28084,1)+' ফুট)':'—';
+    rows+='<tr><td>'+bn(i+1,0)+'</td><td>±'+bn(pts[i].ac,1)+' মি</td><td>'+side+'</td></tr>'}
+  A=Math.abs(A)/2;$('bdRows').innerHTML=rows;
+  $('bdSum').innerHTML='<b>পয়েন্ট:</b> '+bn(n,0)+(n>1?' • <b>পরিসীমা:</b> '+bn(per,1)+' মি ('+bn(per*3.28084,1)+' ফুট)':'')+(n>2?'<br><b>ক্ষেত্রফল:</b> '+bn(A/40.4686,2)+' শতক • '+bn(A,1)+' বর্গমিটার • '+bn(A*10.7639,0)+' বর্গফুট':'');
+  var map=window.__liveMap;if(!map||!window.L)return;
+  if(layer){map.removeLayer(layer);layer=null}
+  if(!n)return;
+  layer=L.layerGroup().addTo(map);
+  var ll=pts.map(function(p){return[p.la,p.lo]});
+  if(n>2)L.polygon(ll,{color:'#e0a100',weight:3,fillColor:'#e0a100',fillOpacity:.15}).addTo(layer);
+  else if(n>1)L.polyline(ll,{color:'#e0a100',weight:3}).addTo(layer);
+  pts.forEach(function(p,i){L.circleMarker([p.la,p.lo],{radius:6,color:'#fff',weight:2,fillColor:'#e0a100',fillOpacity:1}).bindTooltip(String(i+1),{permanent:true,direction:'top',offset:[0,-6]}).addTo(layer)});
+  if(fit){try{if(n>1)map.fitBounds(L.latLngBounds(ll),{padding:[30,30],maxZoom:20});else map.setView(ll[0],Math.max(map.getZoom(),18))}catch(e){}}
+}
+function collect(){
+  if(busy)return;
+  if(!navigator.geolocation){$('bdStatus').textContent='এই ব্রাউজারে GPS নেই।';return}
+  if(!window.isSecureContext){$('bdStatus').textContent='⚠️ HTTPS ঠিকানা (GitHub Pages) থেকে খুলুন; ফাইল থেকে GPS চলবে না।';return}
+  busy=true;$('bdGo').disabled=true;
+  var secs=+$('bdSec').value,t0=Date.now(),s=[],tm=null;
+  $('bdStatus').textContent='স্থির দাঁড়িয়ে থাকুন…';
+  var id=navigator.geolocation.watchPosition(function(p){s.push({la:p.coords.latitude,lo:p.coords.longitude,ac:p.coords.accuracy||99})},function(e){
+    navigator.geolocation.clearWatch(id);clearInterval(tm);busy=false;$('bdGo').disabled=false;$('bdBar').style.width='0';
+    $('bdStatus').textContent=e.code==1?'❌ Location অনুমতি বন্ধ। ব্রাউজারে Allow করুন।':'❌ GPS পাওয়া যায়নি। খোলা জায়গায় আবার চেষ্টা করুন।';
+  },{enableHighAccuracy:true,maximumAge:0,timeout:20000});
+  tm=setInterval(function(){
+    var el=(Date.now()-t0)/1000;
+    $('bdBar').style.width=Math.min(100,el/secs*100)+'%';
+    $('bdStatus').textContent='স্থির দাঁড়িয়ে থাকুন… '+bn(Math.max(0,Math.ceil(secs-el)),0)+' সেকেন্ড • নমুনা '+bn(s.length,0);
+    if(el>=secs){
+      clearInterval(tm);navigator.geolocation.clearWatch(id);busy=false;$('bdGo').disabled=false;$('bdBar').style.width='0';
+      if(!s.length){$('bdStatus').textContent='❌ কোনো রিডিং আসেনি। আবার চেষ্টা করুন।';return}
+      var best=Math.min.apply(null,s.map(function(x){return x.ac}));
+      var g=s.filter(function(x){return x.ac<=best*1.5+1}),w=0,la=0,lo=0;
+      g.forEach(function(x){var k=1/(x.ac*x.ac);w+=k;la+=x.la*k;lo+=x.lo*k});
+      var ac=Math.min.apply(null,g.map(function(x){return x.ac}));
+      pts.push({la:la/w,lo:lo/w,ac:ac});save();draw(true);
+      $('bdStatus').textContent='✅ পয়েন্ট '+bn(pts.length,0)+' নেওয়া হয়েছে (ভুলের সীমা ±'+bn(ac,1)+' মিটার)।'+(ac>8?' ⚠️ সিগন্যাল দুর্বল, দরকারে আবার নিন।':' এবার পরের কোণায় যান।');
+    }
+  },250);
+}
+$('bdGo').onclick=collect;
+$('bdUndo').onclick=function(){pts.pop();save();draw(true)};
+$('bdClr').onclick=function(){if(pts.length&&confirm('সব পয়েন্ট মুছে ফেলবেন?')){pts=[];save();draw(false)}};
+$('bdCsv').onclick=function(){if(!pts.length)return;var t='point,latitude,longitude,accuracy_m\n'+pts.map(function(p,i){return(i+1)+','+p.la.toFixed(8)+','+p.lo.toFixed(8)+','+p.ac.toFixed(1)}).join('\n');var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download='jomi-points.csv';a.click()};
+draw(false);
+})();
 </script>
 </body></html>
