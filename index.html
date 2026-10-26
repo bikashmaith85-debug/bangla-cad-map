@@ -86,7 +86,7 @@ input[type=range]{width:100%;min-height:32px}
  <div class="mc-note"><b>বাস্তবায়নের সীমা:</b> এই সংস্করণে ড্যাশবোর্ডের বোতাম, ডেমো কর্মী, অনুমতি-অবস্থার পরিবর্তন ও লগ এই ব্রাউজারে পরীক্ষা করা যাবে। একাধিক ফোনে লিংক, প্রকৃত লাইভ GPS, ভিডিও কল/রেকর্ডিং, সার্ভার-সুরক্ষিত অনুমতি এবং স্বয়ংক্রিয় সতর্কতা চালাতে পরবর্তী ধাপে লগইন, ডেটাবেস/ব্যাকএন্ড ও ভিডিও পরিষেবা যুক্ত করতে হবে। ট্র্যাকিং/রেকর্ডিং চালু থাকলে কর্মীকে স্পষ্টভাবে জানাতে ও প্রয়োজনীয় সম্মতি নিতে হবে।</div>
 </section>
 <section class="section" style="margin:4px 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px"><h2>লাইভ ম্যাপ — স্যাটেলাইট / হাইব্রিড / র‍্যাস্টার</h2><div class="map-controls"><button id="mapSatellite" class="green">স্যাটেলাইট ম্যাপ</button><button id="mapHybrid" class="secondary">হাইব্রিড ম্যাপ</button><button id="mapRaster" class="secondary">র‍্যাস্টার ছবি</button></div><div class="row rrow"><div><label>নিজের র‍্যাস্টার ছবি (JPG/PNG/WebP)</label><input id="rasterFile" type="file" accept="image/png,image/jpeg,image/webp"></div><div><label>র‍্যাস্টার স্বচ্ছতা: <span id="rasterOpacityLabel">70%</span></label><input id="rasterOpacity" type="range" min="10" max="100" value="70" step="5"><button id="mapLocate" class="green">আমার বর্তমান GPS অবস্থান দেখান</button><button id="mapCenter" class="secondary" style="margin-top:6px">📍 আমার অবস্থানে যাও</button><button id="mapManual" class="secondary" style="margin-top:6px">GPS না এলে: ম্যাপে ট্যাপ করে অবস্থান বসান</button></div></div><div class="metrics" id="liveMapStatus" style="margin:10px 0;border:2px solid #087cff">ম্যাপ লোড করতে ইন্টারনেট প্রয়োজন। প্রথমে স্যাটেলাইট বা হাইব্রিড নির্বাচন করুন; লাইভ GPS বিন্দু দেখাতে Location অনুমতি দিন এবং “আমার বর্তমান GPS অবস্থান দেখান” চাপুন।</div><div class="metrics" id="gpsDiag" style="margin:6px 0;font-size:13px"></div><div id="liveMap"></div>
-<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট <small style="font-weight:400;color:#167a55">(সংস্করণ ৫: ট্যাপ করে সীমানা, কর্ণ)</small></h2>
+<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট <small style="font-weight:400;color:#167a55">(সংস্করণ ৬: কাজ সংরক্ষণ)</small></h2>
 <div class="hint" style="margin-top:0">কোণায় দাঁড়ান → বোতাম চাপুন → কয়েক সেকেন্ড স্থির থাকুন → পরের কোণায় যান। পয়েন্টগুলো ওপরের ম্যাপেও আঁকা হবে।</div>
 <div class="row"><div><label>প্রতি পয়েন্টে সময়</label><select id="bdSec"><option value="5" selected>৫ সেকেন্ড</option><option value="8">৮ সেকেন্ড</option><option value="10">১০ সেকেন্ড</option></select></div></div>
 <div class="btnrow"><button id="bdEdit" class="blue" style="font-size:17px;padding:12px 16px;width:100%">✋ ম্যাপে ট্যাপ করে সীমানা আঁকুন</button></div>
@@ -97,6 +97,13 @@ input[type=range]{width:100%;min-height:32px}
 <div style="overflow-x:auto"><table class="mc-table" style="width:100%"><thead><tr><th>পয়েন্ট</th><th>ভুলের সীমা</th><th>পরের দিকের দৈর্ঘ্য</th></tr></thead><tbody id="bdRows"></tbody></table></div>
 <div id="bdTape"></div>
 <div class="btnrow"><button id="bdUndo" class="secondary">শেষ পয়েন্ট বাদ দিন</button><button id="bdCsv" class="blue">CSV সংরক্ষণ</button><button id="bdClr" class="secondary">সব মুছুন</button></div>
+<div class="section" style="margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:10px"><h3 style="margin:0 0 6px">💾 কাজ সংরক্ষণ</h3>
+<div class="row"><div><label>কাজের নাম (যেমন: রহিমের জমি)</label><input id="svName" type="text" style="width:100%" placeholder="নাম লিখুন"></div></div>
+<div class="btnrow"><button id="svSave" class="green">এই কাজ সংরক্ষণ করুন</button><button id="svExport" class="blue">ফাইলে সংরক্ষণ (.json)</button></div>
+<div class="metrics" id="svMsg" style="display:none"></div>
+<div style="overflow-x:auto"><table class="mc-table" style="width:100%"><tbody id="svList"></tbody></table></div>
+<div class="row"><div><label>ফাইল থেকে কাজ খুলুন (.json)</label><input id="svImport" type="file" accept=".json,application/json"></div></div>
+<div class="hint">“সংরক্ষণ করুন” এই ব্রাউজারেই থাকে (Incognito বা ক্যাশ মুছলে হারাবে)। স্থায়ী ব্যাকআপের জন্য “ফাইলে সংরক্ষণ” করে ফাইলটি Google Drive বা ফোনে রাখুন।</div></div>
 <div class="hint">৫ সেকেন্ডের গড় GPS-এর কাঁপুনি কমায়, কিন্তু ফোনের GPS-এ সাধারণত ১–৩ মিটার ভুল থাকে; ইঞ্চি-নির্ভুল নয়। আইনি/চূড়ান্ত মাপে ফিতা বা সার্ভেয়ার ব্যবহার করুন।</div></div><div class="hint">স্যাটেলাইট/হাইব্রিড টাইল: Esri World Imagery ও Reference labels; Google Maps নয়। র‍্যাস্টার মোডে আপনার নির্বাচিত ছবিটি ম্যাপের ওপর ওভারলে হিসেবে বসে—নির্ভুল জমি মাপের জন্য ছবিটির জিওরেফারেন্স/সীমানা মিলিয়ে নিতে হবে। ইমেজারি রিয়েল-টাইম নয় এবং সব এলাকার আপডেটের তারিখ এক নয়।</div></section>
 <div class="toolbar"><button id="fit" class="secondary">ছবি ফিট করুন</button><button id="reset" class="secondary">নতুন ক্যানভাস</button><span class="badge">Prototype 1.6 • Master Control • Access approval demo</span><span class="status" id="status">ছবি যোগ করুন অথবা খালি ক্যানভাসে আঁকুন</span></div><div class="canvasbox"><canvas id="canvas" width="1000" height="700"></canvas></div>
 <div class="section" style="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:10px"><h2>ঐতিহাসিক ছবি তুলনা — পাশাপাশি বা স্বচ্ছ ওভারলে</h2><div class="row"><div><label>পুরোনো বছরের ছবি (JPG/PNG/WebP)</label><input id="compareAFile" type="file" accept="image/png,image/jpeg,image/webp"><label>ছবির বছর/তারিখ (ঐচ্ছিক)</label><input id="compareAYear" type="text" placeholder="যেমন 2015"></div><div><label>নতুন বছরের ছবি (JPG/PNG/WebP)</label><input id="compareBFile" type="file" accept="image/png,image/jpeg,image/webp"><label>ছবির বছর/তারিখ (ঐচ্ছিক)</label><input id="compareBYear" type="text" placeholder="যেমন 2025"></div></div><div class="btnrow"><button id="compareSide" class="secondary">পাশাপাশি তুলনা</button><button id="compareOverlay" class="secondary">ওভারলে তুলনা</button></div><label>ওভারলে স্বচ্ছতা: <span id="compareOpacityLabel">50%</span></label><input id="compareOpacity" type="range" min="0" max="100" value="50" step="5"><div id="compareStatus" class="hint">তুলনা করতে দুইটি ঐতিহাসিক ছবি নির্বাচন করুন। ছবিগুলি একই এলাকার ও কাছাকাছি স্কেলের হলে তুলনা ভালো হবে।</div><div id="compareView" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"></div><div class="hint">এটি আপনার বেছে নেওয়া দুইটি স্থানীয় ছবির ভিজ্যুয়াল তুলনা; স্বয়ংক্রিয়ভাবে কোনো বছরের স্যাটেলাইট ডেটা আনা হয় না। তুলনার ছবিগুলি জিওরেফারেন্স/জমির সীমানার নির্ভুলতা যাচাই করে না।</div></div><div class="hint">এটি প্রথম UI/ফিচার প্রোটোটাইপ, পূর্ণ CAD ইঞ্জিন নয়। বাস্তব জমির মাপ পেতে সঠিক ক্যালিব্রেশন আবশ্যক।</div></main>
@@ -554,6 +561,54 @@ function tcalc(q){
     tlayer=L.polygon(ll,{color:'#1769aa',weight:3,dashArray:'6 5',fillColor:'#1769aa',fillOpacity:.10}).addTo(map);
   }
 }
+
+var projs=[];
+try{projs=JSON.parse(localStorage.getItem('bdProjects')||'[]')||[]}catch(e){projs=[]}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function smsg(t){var m=$('svMsg');m.style.display='';m.textContent=t}
+function pstore(){try{localStorage.setItem('bdProjects',JSON.stringify(projs));return true}catch(e){smsg('⚠️ ব্রাউজারে সংরক্ষণ করা গেল না। “ফাইলে সংরক্ষণ” ব্যবহার করুন।');return false}}
+function plist(){
+  var h='';
+  projs.forEach(function(p,i){h+='<tr><td>'+esc(p.name)+'<br><small>'+new Date(p.t).toLocaleDateString('bn-BD')+' • পয়েন্ট '+bn(p.pts.length,0)+'</small></td><td style="white-space:nowrap"><button data-a="open" data-i="'+i+'">খুলুন</button> <button class="secondary" data-a="del" data-i="'+i+'">মুছুন</button></td></tr>'});
+  $('svList').innerHTML=h||'<tr><td>এখনও কোনো কাজ সংরক্ষিত নেই।</td></tr>';
+}
+function snap(name){return{name:name,t:Date.now(),pts:JSON.parse(JSON.stringify(pts)),tv:JSON.parse(JSON.stringify(tvals)),tu:tunit}}
+function loadWork(p){
+  pts=JSON.parse(JSON.stringify(p.pts));tvals=p.tv||{};tunit=p.tu||'m';
+  save();tsave();tN=-1;$('svName').value=p.name||'';draw(true);
+}
+function curName(){return($('svName').value||'').trim()||('জমি '+new Date().toLocaleDateString('bn-BD'))}
+$('svSave').onclick=function(){
+  if(!pts.length){smsg('আগে কিছু পয়েন্ট নিন বা ম্যাপে ট্যাপ করুন।');return}
+  var nm=curName(),w=snap(nm),k=-1;
+  projs.forEach(function(p,i){if(p.name===nm)k=i});
+  if(k>=0)projs[k]=w;else projs.unshift(w);
+  if(pstore()){plist();smsg('✅ “'+nm+'” সংরক্ষণ হয়েছে ('+(k>=0?'আগেরটির জায়গায়':'নতুন')+')।')}
+};
+$('svList').onclick=function(e){
+  var t=e.target,a=t.getAttribute&&t.getAttribute('data-a'),i=+(t.getAttribute&&t.getAttribute('data-i'));
+  if(a==='open'&&projs[i]){loadWork(projs[i]);smsg('✅ “'+projs[i].name+'” খোলা হয়েছে।')}
+  else if(a==='del'&&projs[i]&&confirm('“'+projs[i].name+'” মুছে ফেলবেন?')){projs.splice(i,1);pstore();plist()}
+};
+$('svExport').onclick=function(){
+  if(!pts.length){smsg('আগে কিছু পয়েন্ট নিন বা ম্যাপে ট্যাপ করুন।');return}
+  var w=snap(curName()),a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(w)],{type:'application/json'}));
+  a.download='jomi-'+w.name.replace(/[\s\/\\:*?"<>|]+/g,'_')+'.json';a.click();
+  smsg('✅ ফাইল ডাউনলোড হয়েছে। এটি Google Drive বা নিরাপদ জায়গায় রাখুন।');
+};
+$('svImport').onchange=function(){
+  var f=this.files&&this.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{var w=JSON.parse(r.result);
+      if(!w||!Array.isArray(w.pts)||!w.pts.every(function(p){return isFinite(p.la)&&isFinite(p.lo)}))throw 0;
+      loadWork(w);smsg('✅ ফাইল থেকে “'+(w.name||'কাজ')+'” খোলা হয়েছে। রেখে দিতে “সংরক্ষণ করুন” চাপুন।')}
+    catch(e){smsg('⚠️ এটি সঠিক কাজের ফাইল নয়।')}
+  };
+  r.readAsText(f);this.value='';
+};
+plist();
 $('bdGo').onclick=collect;
 $('bdEdit').onclick=function(){setEdit(!editMode)};
 if(window.__liveMap&&!clickBound){window.__liveMap.on('click',function(e){if(!editMode)return;pts.push({la:e.latlng.lat,lo:e.latlng.lng,ac:0,m:true});save();draw(false)});clickBound=true}
