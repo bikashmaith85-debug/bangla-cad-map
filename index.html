@@ -86,7 +86,7 @@ input[type=range]{width:100%;min-height:32px}
  <div class="mc-note"><b>বাস্তবায়নের সীমা:</b> এই সংস্করণে ড্যাশবোর্ডের বোতাম, ডেমো কর্মী, অনুমতি-অবস্থার পরিবর্তন ও লগ এই ব্রাউজারে পরীক্ষা করা যাবে। একাধিক ফোনে লিংক, প্রকৃত লাইভ GPS, ভিডিও কল/রেকর্ডিং, সার্ভার-সুরক্ষিত অনুমতি এবং স্বয়ংক্রিয় সতর্কতা চালাতে পরবর্তী ধাপে লগইন, ডেটাবেস/ব্যাকএন্ড ও ভিডিও পরিষেবা যুক্ত করতে হবে। ট্র্যাকিং/রেকর্ডিং চালু থাকলে কর্মীকে স্পষ্টভাবে জানাতে ও প্রয়োজনীয় সম্মতি নিতে হবে।</div>
 </section>
 <section class="section" style="margin:4px 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px"><h2>লাইভ ম্যাপ — স্যাটেলাইট / হাইব্রিড / র‍্যাস্টার</h2><div class="map-controls"><button id="mapSatellite" class="green">স্যাটেলাইট ম্যাপ</button><button id="mapHybrid" class="secondary">হাইব্রিড ম্যাপ</button><button id="mapRaster" class="secondary">র‍্যাস্টার ছবি</button></div><div class="row rrow"><div><label>নিজের র‍্যাস্টার ছবি (JPG/PNG/WebP)</label><input id="rasterFile" type="file" accept="image/png,image/jpeg,image/webp"></div><div><label>র‍্যাস্টার স্বচ্ছতা: <span id="rasterOpacityLabel">70%</span></label><input id="rasterOpacity" type="range" min="10" max="100" value="70" step="5"><button id="mapLocate" class="green">আমার বর্তমান GPS অবস্থান দেখান</button><button id="mapCenter" class="secondary" style="margin-top:6px">📍 আমার অবস্থানে যাও</button><button id="mapManual" class="secondary" style="margin-top:6px">GPS না এলে: ম্যাপে ট্যাপ করে অবস্থান বসান</button></div></div><div class="metrics" id="liveMapStatus" style="margin:10px 0;border:2px solid #087cff">ম্যাপ লোড করতে ইন্টারনেট প্রয়োজন। প্রথমে স্যাটেলাইট বা হাইব্রিড নির্বাচন করুন; লাইভ GPS বিন্দু দেখাতে Location অনুমতি দিন এবং “আমার বর্তমান GPS অবস্থান দেখান” চাপুন।</div><div class="metrics" id="gpsDiag" style="margin:6px 0;font-size:13px"></div><div id="liveMap"></div>
-<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট</h2>
+<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট <small style="font-weight:400;color:#167a55">(সংস্করণ ৩: CSV-তে দূরত্ব ও ক্ষেত্রফল)</small></h2>
 <div class="hint" style="margin-top:0">কোণায় দাঁড়ান → বোতাম চাপুন → কয়েক সেকেন্ড স্থির থাকুন → পরের কোণায় যান। পয়েন্টগুলো ওপরের ম্যাপেও আঁকা হবে।</div>
 <div class="row"><div><label>প্রতি পয়েন্টে সময়</label><select id="bdSec"><option value="5" selected>৫ সেকেন্ড</option><option value="8">৮ সেকেন্ড</option><option value="10">১০ সেকেন্ড</option></select></div></div>
 <div class="btnrow"><button id="bdGo" class="green" style="font-size:18px;padding:14px 16px;width:100%">পয়েন্ট নিন</button></div>
@@ -354,9 +354,9 @@ window.addEventListener('resize',resizeCanvas);resizeCanvas();draw();
 (function initLiveMap(){
  const status=document.getElementById('liveMapStatus');
  if(!window.L){status.textContent='ম্যাপ লাইব্রেরি লোড হয়নি। ইন্টারনেট চালু করে পেজটি আবার খুলুন।';return;}
- const map=L.map('liveMap',{zoomControl:true}).setView([22.5726,88.3639],12);window.__liveMap=map;
- const imagery=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'});
- const labels=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Labels © Esri'});
+ const map=L.map('liveMap',{zoomControl:true,maxZoom:22}).setView([22.5726,88.3639],12);window.__liveMap=map;
+ const imagery=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:22,maxNativeZoom:17,attribution:'Tiles © Esri'});
+ const labels=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:22,maxNativeZoom:17,attribution:'Labels © Esri'});
  let raster=null, gpsMarker=null, accuracyCircle=null, rasterUrl=null; imagery.addTo(map);
  function mode(which){[ 'mapSatellite','mapHybrid','mapRaster'].forEach(id=>document.getElementById(id).className='secondary');document.getElementById(which==='satellite'?'mapSatellite':which==='hybrid'?'mapHybrid':'mapRaster').className='green';
  if(which==='satellite'){if(!map.hasLayer(imagery))imagery.addTo(map);if(map.hasLayer(labels))map.removeLayer(labels);if(raster&&map.hasLayer(raster))map.removeLayer(raster);status.textContent='স্যাটেলাইট ম্যাপ চালু হয়েছে।';}
@@ -366,12 +366,27 @@ window.addEventListener('resize',resizeCanvas);resizeCanvas();draw();
  document.getElementById('rasterFile').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(rasterUrl)URL.revokeObjectURL(rasterUrl);rasterUrl=URL.createObjectURL(f);const bounds=map.getBounds();if(raster)map.removeLayer(raster);raster=L.imageOverlay(rasterUrl,bounds,{opacity:Number(document.getElementById('rasterOpacity').value)/100});mode('raster');});
  document.getElementById('rasterOpacity').addEventListener('input',e=>{document.getElementById('rasterOpacityLabel').textContent=e.target.value+'%';if(raster)raster.setOpacity(Number(e.target.value)/100);});
  let mapWatchId=null,lastLL=null;
- function showLivePosition(pos,centerMap){const lat=pos.coords.latitude,lon=pos.coords.longitude,acc=Number.isFinite(pos.coords.accuracy)?pos.coords.accuracy:0;const ll=[lat,lon];lastLL=ll;if(!gpsMarker){gpsMarker=L.circleMarker(ll,{radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1}).addTo(map).bindPopup('আপনার লাইভ GPS অবস্থান');}else gpsMarker.setLatLng(ll);gpsMarker.setStyle({radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1});gpsMarker.setPopupContent('🔵 আপনার লাইভ GPS অবস্থান<br>Latitude: '+lat.toFixed(7)+'<br>Longitude: '+lon.toFixed(7)+'<br>আনুমানিক নির্ভুলতা: ±'+Math.round(acc)+' মিটার');if(!accuracyCircle){accuracyCircle=L.circle(ll,{radius:Math.max(1,acc),color:'#087cff',weight:1,fillColor:'#087cff',fillOpacity:.10}).addTo(map);}else accuracyCircle.setLatLng(ll).setRadius(Math.max(1,acc));if(centerMap)map.setView(ll,Math.max(map.getZoom(),17));status.textContent='🔵 লাইভ GPS চালু — Latitude '+lat.toFixed(7)+', Longitude '+lon.toFixed(7)+', Accuracy ±'+Math.round(acc)+' মিটার। অবস্থান আপডেট হচ্ছে।';}
+ // GPS স্থিরকরণ ফিল্টার: কাঁপুনি গড় করে বিন্দুকে এক জায়গায় ধরে রাখে; বেশি সরলে দ্রুত নতুন জায়গা ধরে।
+ let kf=null;
+ function stabilize(pos){
+  const raw={la:pos.coords.latitude,lo:pos.coords.longitude,ac:Math.max(1,pos.coords.accuracy||50),t:pos.timestamp||Date.now()};
+  const mLat=110574,mLon=111320*Math.cos(raw.la*Math.PI/180);
+  if(!kf){kf={la:raw.la,lo:raw.lo,v:raw.ac*raw.ac,t:raw.t,far:0,n:1};return {latitude:kf.la,longitude:kf.lo,accuracy:raw.ac,n:1,moved:true};}
+  const dist=Math.hypot((raw.la-kf.la)*mLat,(raw.lo-kf.lo)*mLon);
+  if(dist>Math.max(8,2.5*raw.ac)){kf.far++;if(kf.far>=2){kf={la:raw.la,lo:raw.lo,v:raw.ac*raw.ac,t:raw.t,far:0,n:1};return {latitude:kf.la,longitude:kf.lo,accuracy:raw.ac,n:1,moved:true};}}
+  else kf.far=0;
+  const dt=Math.max(0,(raw.t-kf.t)/1000);kf.t=raw.t;
+  kf.v+=dt*1.2*1.2;
+  const K=kf.v/(kf.v+raw.ac*raw.ac);
+  kf.la+=K*(raw.la-kf.la);kf.lo+=K*(raw.lo-kf.lo);kf.v=(1-K)*kf.v;kf.n++;
+  return {latitude:kf.la,longitude:kf.lo,accuracy:raw.ac,n:kf.n,moved:false};
+ }
+ function showLivePosition(pos,centerMap){const st=stabilize(pos),lat=st.latitude,lon=st.longitude,acc=Number.isFinite(st.accuracy)?st.accuracy:0;const ll=[lat,lon];lastLL=ll;if(!gpsMarker){gpsMarker=L.circleMarker(ll,{radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1}).addTo(map).bindPopup('আপনার লাইভ GPS অবস্থান');}else gpsMarker.setLatLng(ll);gpsMarker.setStyle({radius:9,color:'#ffffff',weight:3,fillColor:'#087cff',fillOpacity:1});gpsMarker.setPopupContent('🔵 আপনার লাইভ GPS অবস্থান<br>Latitude: '+lat.toFixed(7)+'<br>Longitude: '+lon.toFixed(7)+'<br>আনুমানিক নির্ভুলতা: ±'+Math.round(acc)+' মিটার');if(!accuracyCircle){accuracyCircle=L.circle(ll,{radius:Math.max(1,acc),color:'#087cff',weight:1,fillColor:'#087cff',fillOpacity:.10}).addTo(map);}else accuracyCircle.setLatLng(ll).setRadius(Math.max(1,acc));if(centerMap)map.setView(ll,Math.max(map.getZoom(),17));status.textContent='🔵 লাইভ GPS চালু — Latitude '+lat.toFixed(7)+', Longitude '+lon.toFixed(7)+', Accuracy ±'+Math.round(acc)+' মিটার। '+(st.n<4?'⏳ স্থির করা হচ্ছে…':'✅ স্থির অবস্থান (গড় '+st.n+'টি রিডিং)');}
  
  const diag=document.getElementById('gpsDiag'),locBtn=document.getElementById('mapLocate');
  function showDiag(){const show=t=>{diag.textContent=t;diag.style.display=t?'':'none';};if(!window.isSecureContext){show('⚠️ নিরাপদ (HTTPS) সংযোগ নেই — GPS কাজ নাও করতে পারে।');return;}show('');if(navigator.permissions&&navigator.permissions.query){navigator.permissions.query({name:'geolocation'}).then(r=>{const f=()=>show(r.state==='denied'?'🚫 Location অনুমতি বন্ধ আছে। Chrome সেটিংস থেকে Allow করুন।':r.state==='prompt'?'ℹ️ বোতাম চাপলে Location অনুমতি চাইবে — Allow দিন।':'');f();r.onchange=f;}).catch(()=>{});}}
  showDiag();
- function stopLive(){if(mapWatchId!==null){navigator.geolocation.clearWatch(mapWatchId);mapWatchId=null;}locBtn.textContent='আমার বর্তমান GPS অবস্থান দেখান';}
+ function stopLive(){kf=null;if(mapWatchId!==null){navigator.geolocation.clearWatch(mapWatchId);mapWatchId=null;}locBtn.textContent='আমার বর্তমান GPS অবস্থান দেখান';}
  function gpsError(err){const m={1:'Location অনুমতি পাওয়া যায়নি। Chrome ⋮ → Settings → Site settings → Location থেকে Allow করুন, এবং ফোন/ট্যাবলেটের Location চালু করুন।',2:'অবস্থান পাওয়া যায়নি। ডিভাইসের Location চালু করে খোলা জায়গায় চেষ্টা করুন।',3:'সময় শেষ হয়েছে। আবার চেষ্টা করুন।'}[err.code]||err.message;let extra='';if(!window.isSecureContext)extra=' ⚠️ পেজটি HTTPS-এ নেই, তাই Chrome GPS আটকে দিচ্ছে। সফটওয়্যারটি GitHub Pages-এর https:// ঠিকানা থেকে খুলুন।';status.textContent='❌ GPS ব্যর্থ: '+m+extra;if(err.code===1)stopLive();}
  locBtn.onclick=()=>{
   if(mapWatchId!==null){stopLive();status.textContent='লাইভ GPS বন্ধ হয়েছে।';return;}
@@ -426,7 +441,7 @@ function draw(fit){
   if(n>2)L.polygon(ll,{color:'#e0a100',weight:3,fillColor:'#e0a100',fillOpacity:.15}).addTo(layer);
   else if(n>1)L.polyline(ll,{color:'#e0a100',weight:3}).addTo(layer);
   pts.forEach(function(p,i){L.circleMarker([p.la,p.lo],{radius:6,color:'#fff',weight:2,fillColor:'#e0a100',fillOpacity:1}).bindTooltip(String(i+1),{permanent:true,direction:'top',offset:[0,-6]}).addTo(layer)});
-  if(fit){try{if(n>1)map.fitBounds(L.latLngBounds(ll),{padding:[30,30],maxZoom:20});else map.setView(ll[0],Math.max(map.getZoom(),18))}catch(e){}}
+  if(fit){try{if(n>1)map.fitBounds(L.latLngBounds(ll),{padding:[30,30],maxZoom:19});else map.setView(ll[0],Math.max(map.getZoom(),18))}catch(e){}}
 }
 function collect(){
   if(busy)return;
@@ -458,7 +473,21 @@ function collect(){
 $('bdGo').onclick=collect;
 $('bdUndo').onclick=function(){pts.pop();save();draw(true)};
 $('bdClr').onclick=function(){if(pts.length&&confirm('সব পয়েন্ট মুছে ফেলবেন?')){pts=[];save();draw(false)}};
-$('bdCsv').onclick=function(){if(!pts.length)return;var t='point,latitude,longitude,accuracy_m\n'+pts.map(function(p,i){return(i+1)+','+p.la.toFixed(8)+','+p.lo.toFixed(8)+','+p.ac.toFixed(1)}).join('\n');var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download='jomi-points.csv';a.click()};
+$('bdCsv').onclick=function(){
+  if(!pts.length)return;
+  var q=proj(),n=pts.length,per=0,A=0,L=['point,latitude,longitude,accuracy_m,next_point,distance_to_next_m,distance_to_next_ft'];
+  for(var i=0;i<n;i++){
+    var j=(i+1)%n,d=Math.hypot(q[j].x-q[i].x,q[j].y-q[i].y),has=n>1&&(i<n-1||n>2);
+    if(n>1){per+=d;A+=q[i].x*q[j].y-q[j].x*q[i].y}
+    L.push([i+1,pts[i].la.toFixed(8),pts[i].lo.toFixed(8),pts[i].ac.toFixed(1),has?(j+1):'',has?d.toFixed(2):'',has?(d*3.28084).toFixed(1):''].join(','));
+  }
+  A=Math.abs(A)/2;
+  L.push('');L.push('summary,value,unit');
+  L.push('total_points,'+n+',');
+  if(n>1)L.push('perimeter,'+per.toFixed(2)+',m'),L.push('perimeter,'+(per*3.28084).toFixed(1)+',ft');
+  if(n>2){L.push('area,'+A.toFixed(2)+',sq_m');L.push('area,'+(A/40.4686).toFixed(3)+',shatak');L.push('area,'+(A*10.7639).toFixed(1)+',sq_ft');}
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+L.join('\r\n')],{type:'text/csv;charset=utf-8'}));a.download='jomi-points.csv';a.click();
+};
 draw(false);
 })();
 </script>
