@@ -86,7 +86,7 @@ input[type=range]{width:100%;min-height:32px}
  <div class="mc-note"><b>বাস্তবায়নের সীমা:</b> এই সংস্করণে ড্যাশবোর্ডের বোতাম, ডেমো কর্মী, অনুমতি-অবস্থার পরিবর্তন ও লগ এই ব্রাউজারে পরীক্ষা করা যাবে। একাধিক ফোনে লিংক, প্রকৃত লাইভ GPS, ভিডিও কল/রেকর্ডিং, সার্ভার-সুরক্ষিত অনুমতি এবং স্বয়ংক্রিয় সতর্কতা চালাতে পরবর্তী ধাপে লগইন, ডেটাবেস/ব্যাকএন্ড ও ভিডিও পরিষেবা যুক্ত করতে হবে। ট্র্যাকিং/রেকর্ডিং চালু থাকলে কর্মীকে স্পষ্টভাবে জানাতে ও প্রয়োজনীয় সম্মতি নিতে হবে।</div>
 </section>
 <section class="section" style="margin:4px 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px"><h2>লাইভ ম্যাপ — স্যাটেলাইট / হাইব্রিড / র‍্যাস্টার</h2><div class="map-controls"><button id="mapSatellite" class="green">স্যাটেলাইট ম্যাপ</button><button id="mapHybrid" class="secondary">হাইব্রিড ম্যাপ</button><button id="mapRaster" class="secondary">র‍্যাস্টার ছবি</button></div><div class="row rrow"><div><label>নিজের র‍্যাস্টার ছবি (JPG/PNG/WebP)</label><input id="rasterFile" type="file" accept="image/png,image/jpeg,image/webp"></div><div><label>র‍্যাস্টার স্বচ্ছতা: <span id="rasterOpacityLabel">70%</span></label><input id="rasterOpacity" type="range" min="10" max="100" value="70" step="5"><button id="mapLocate" class="green">আমার বর্তমান GPS অবস্থান দেখান</button><button id="mapCenter" class="secondary" style="margin-top:6px">📍 আমার অবস্থানে যাও</button><button id="mapManual" class="secondary" style="margin-top:6px">GPS না এলে: ম্যাপে ট্যাপ করে অবস্থান বসান</button></div></div><div class="metrics" id="liveMapStatus" style="margin:10px 0;border:2px solid #087cff">ম্যাপ লোড করতে ইন্টারনেট প্রয়োজন। প্রথমে স্যাটেলাইট বা হাইব্রিড নির্বাচন করুন; লাইভ GPS বিন্দু দেখাতে Location অনুমতি দিন এবং “আমার বর্তমান GPS অবস্থান দেখান” চাপুন।</div><div class="metrics" id="gpsDiag" style="margin:6px 0;font-size:13px"></div><div id="liveMap"></div>
-<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট <small style="font-weight:400;color:#167a55">(সংস্করণ ৬: কাজ সংরক্ষণ)</small></h2>
+<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট <small style="font-weight:400;color:#167a55">(সংস্করণ ৮: লাইনের প্রতি অংশের দূরত্ব)</small></h2>
 <div class="hint" style="margin-top:0">কোণায় দাঁড়ান → বোতাম চাপুন → কয়েক সেকেন্ড স্থির থাকুন → পরের কোণায় যান। পয়েন্টগুলো ওপরের ম্যাপেও আঁকা হবে।</div>
 <div class="row"><div><label>প্রতি পয়েন্টে সময়</label><select id="bdSec"><option value="5" selected>৫ সেকেন্ড</option><option value="8">৮ সেকেন্ড</option><option value="10">১০ সেকেন্ড</option></select></div></div>
 <div class="btnrow"><button id="bdEdit" class="blue" style="font-size:17px;padding:12px 16px;width:100%">✋ ম্যাপে ট্যাপ করে সীমানা আঁকুন</button></div>
@@ -96,6 +96,11 @@ input[type=range]{width:100%;min-height:32px}
 <div class="metrics" id="bdSum"></div>
 <div style="overflow-x:auto"><table class="mc-table" style="width:100%"><thead><tr><th>পয়েন্ট</th><th>ভুলের সীমা</th><th>পরের দিকের দৈর্ঘ্য</th></tr></thead><tbody id="bdRows"></tbody></table></div>
 <div id="bdTape"></div>
+<div id="lnBox" class="section" style="margin:10px 0;padding:10px;border:2px solid #7c3aed;border-radius:10px"><h3 style="margin:0 0 6px;color:#7c3aed">📏 আলাদা লাইন (সীমানার বাইরের বা ভেতরের যেকোনো লাইন)</h3>
+<div class="btnrow"><button id="lnOn" class="blue" style="width:100%;font-size:17px;padding:12px 16px">📏 ম্যাপে আলাদা লাইন টানুন</button></div>
+<div class="metrics" id="lnMsg">ম্যাপে এক বা একাধিক জায়গায় ট্যাপ করে সরল বা বাঁকা লাইন টানুন; দৈর্ঘ্য নিজে থেকে বের হবে। সীমানার কোণার পিনে ট্যাপ করলে লাইন ঠিক ওই কোণা থেকে শুরু হবে।</div>
+<div style="overflow-x:auto"><table class="mc-table" style="width:100%"><tbody id="lnList"></tbody></table></div>
+<div class="btnrow"><button id="lnNew" class="secondary">নতুন লাইন শুরু</button><button id="lnUndo" class="secondary">শেষ বিন্দু বাদ</button><button id="lnClr" class="secondary">সব লাইন মুছুন</button></div></div>
 <div class="btnrow"><button id="bdUndo" class="secondary">শেষ পয়েন্ট বাদ দিন</button><button id="bdCsv" class="blue">CSV সংরক্ষণ</button><button id="bdClr" class="secondary">সব মুছুন</button></div>
 <div class="section" style="margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:10px"><h3 style="margin:0 0 6px">💾 কাজ সংরক্ষণ</h3>
 <div class="row"><div><label>কাজের নাম (যেমন: রহিমের জমি)</label><input id="svName" type="text" style="width:100%" placeholder="নাম লিখুন"></div></div>
@@ -449,7 +454,7 @@ function draw(fit){
   window.__diag=dl;
   $('bdSum').innerHTML='<b>পয়েন্ট:</b> '+bn(n,0)+(n>1?' • <b>পরিসীমা:</b> '+bn(per,1)+' মি ('+bn(per*3.28084,1)+' ফুট)':'')+(n>2?'<br><b>ক্ষেত্রফল:</b> '+bn(A/40.4686,2)+' শতক • '+bn(A,1)+' বর্গমিটার • '+bn(A*10.7639,0)+' বর্গফুট':'')
     +(dl.length?'<br><b>কর্ণ:</b> '+dl.map(function(x){return bn(x.i+1,0)+'↔'+bn(x.j+1,0)+': '+bn(x.d,2)+' মি ('+bn(x.d*3.28084,1)+' ফুট)'}).join(' • '):'');
-  tapeUI(q);
+  tapeUI(q);drawLines();
   var map=window.__liveMap;if(!map||!window.L)return;
   if(layer){map.removeLayer(layer);layer=null}
   if(!n)return;
@@ -465,11 +470,13 @@ function draw(fit){
     L.marker([(ll[i][0]+ll[j][0])/2,(ll[i][1]+ll[j][1])/2],{icon:lbl(bn(dd,1)+' মি','#16261c'),interactive:false,keyboard:false}).addTo(layer)}
   pts.forEach(function(p,k){
     var m=L.marker([p.la,p.lo],{icon:pin(bn(k+1,0)),draggable:editMode,keyboard:false}).addTo(layer);
+    if(lineMode)m.on('click',function(){addLineVertex(p.la,p.lo)});
     if(editMode)m.on('dragend',function(e){var c=e.target.getLatLng();pts[k]={la:c.lat,lo:c.lng,ac:0,m:true};save();draw(false)});
   });
   if(fit){try{if(n>1)map.fitBounds(L.latLngBounds(ll),{padding:[30,30],maxZoom:19});else map.setView(ll[0],Math.max(map.getZoom(),18))}catch(e){}}
 }
 function setEdit(on){
+  if(on&&lineMode)setLine(false);
   editMode=on;var b=$('bdEdit'),m=window.__liveMap;
   b.textContent=on?'✅ ট্যাপ মোড চালু — শেষ করতে এখানে চাপুন':'✋ ম্যাপে ট্যাপ করে সীমানা আঁকুন';
   b.className=on?'green':'blue';
@@ -572,10 +579,10 @@ function plist(){
   projs.forEach(function(p,i){h+='<tr><td>'+esc(p.name)+'<br><small>'+new Date(p.t).toLocaleDateString('bn-BD')+' • পয়েন্ট '+bn(p.pts.length,0)+'</small></td><td style="white-space:nowrap"><button data-a="open" data-i="'+i+'">খুলুন</button> <button class="secondary" data-a="del" data-i="'+i+'">মুছুন</button></td></tr>'});
   $('svList').innerHTML=h||'<tr><td>এখনও কোনো কাজ সংরক্ষিত নেই।</td></tr>';
 }
-function snap(name){return{name:name,t:Date.now(),pts:JSON.parse(JSON.stringify(pts)),tv:JSON.parse(JSON.stringify(tvals)),tu:tunit}}
+function snap(name){return{name:name,t:Date.now(),pts:JSON.parse(JSON.stringify(pts)),tv:JSON.parse(JSON.stringify(tvals)),tu:tunit,ln:JSON.parse(JSON.stringify(lines))}}
 function loadWork(p){
-  pts=JSON.parse(JSON.stringify(p.pts));tvals=p.tv||{};tunit=p.tu||'m';
-  save();tsave();tN=-1;$('svName').value=p.name||'';draw(true);
+  pts=JSON.parse(JSON.stringify(p.pts));tvals=p.tv||{};tunit=p.tu||'m';lines=Array.isArray(p.ln)?JSON.parse(JSON.stringify(p.ln)):[];cur=-1;
+  save();tsave();lsave();tN=-1;$('svName').value=p.name||'';draw(true);
 }
 function curName(){return($('svName').value||'').trim()||('জমি '+new Date().toLocaleDateString('bn-BD'))}
 $('svSave').onclick=function(){
@@ -609,9 +616,52 @@ $('svImport').onchange=function(){
   r.readAsText(f);this.value='';
 };
 plist();
+
+var lines=[],lineMode=false,cur=-1,llayer=null;
+try{lines=JSON.parse(localStorage.getItem('bdLines')||'[]')||[]}catch(e){lines=[]}
+function lsave(){try{localStorage.setItem('bdLines',JSON.stringify(lines))}catch(e){}}
+function hav(a,b){var R=6371008.8,r=Math.PI/180,dl=(b.la-a.la)*r,dn=(b.lo-a.lo)*r,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a.la*r)*Math.cos(b.la*r)*Math.sin(dn/2)*Math.sin(dn/2);return 2*R*Math.asin(Math.sqrt(x))}
+function llen(Ln){var t=0;for(var i=1;i<Ln.length;i++)t+=hav(Ln[i-1],Ln[i]);return t}
+function addLineVertex(la,lo){
+  if(cur<0||!lines[cur]){lines.push([]);cur=lines.length-1}
+  lines[cur].push({la:la,lo:lo});lsave();drawLines();
+}
+function drawLines(){
+  var h='';
+  lines.forEach(function(Ln,i){var d=llen(Ln);
+    h+='<tr><td>'+(i===cur&&lineMode?'▶ ':'')+'লাইন '+bn(i+1,0)+'<br><small>বিন্দু '+bn(Ln.length,0)+'</small></td><td><b>'+bn(d,2)+' মি</b><br><small>'+bn(d*3.28084,1)+' ফুট</small></td><td><button class="secondary" data-a="ldel" data-i="'+i+'">মুছুন</button></td></tr>';
+    if(Ln.length>1){var cum=0,sg='';for(var k=1;k<Ln.length;k++){var sd=hav(Ln[k-1],Ln[k]);cum+=sd;sg+=bn(k,0)+'→'+bn(k+1,0)+': <b>'+bn(sd,2)+' মি</b> ('+bn(sd*3.28084,1)+' ফুট) • এ পর্যন্ত মোট '+bn(cum,2)+' মি<br>'}
+      h+='<tr><td colspan="3" style="font-size:13px;color:#7c3aed">'+sg+'</td></tr>'}});
+  $('lnList').innerHTML=h||'<tr><td>এখনও কোনো লাইন নেই।</td></tr>';
+  var map=window.__liveMap;if(!map||!window.L)return;
+  if(llayer){map.removeLayer(llayer);llayer=null}
+  if(!lines.length)return;
+  llayer=L.layerGroup().addTo(map);
+  lines.forEach(function(Ln){
+    var ll=Ln.map(function(p){return[p.la,p.lo]});
+    if(ll.length>1)L.polyline(ll,{color:'#7c3aed',weight:4,interactive:false}).addTo(llayer);
+    ll.forEach(function(c){L.circleMarker(c,{radius:5,color:'#fff',weight:2,fillColor:'#7c3aed',fillOpacity:1,interactive:false}).addTo(llayer)});
+    for(var i=1;i<Ln.length;i++)L.marker([(ll[i-1][0]+ll[i][0])/2,(ll[i-1][1]+ll[i][1])/2],{icon:lbl(bn(hav(Ln[i-1],Ln[i]),1)+' মি','#7c3aed'),interactive:false,keyboard:false}).addTo(llayer);
+  });
+}
+function setLine(on){
+  if(on&&editMode)setEdit(false);
+  lineMode=on;cur=-1;
+  var b=$('lnOn'),m=window.__liveMap;
+  b.textContent=on?'✅ লাইন মোড চালু — শেষ করতে এখানে চাপুন':'📏 ম্যাপে আলাদা লাইন টানুন';
+  b.className=on?'green':'blue';
+  $('lnMsg').textContent=on?'ম্যাপে লাইনের শুরু, বাঁক ও শেষ বিন্দুতে ক্রমানুসারে ট্যাপ করুন। কোণার পিনে ট্যাপ করলে ওই কোণা ধরবে। আরেকটি আলাদা লাইনের জন্য “নতুন লাইন শুরু” চাপুন।':'লাইন মোড বন্ধ।';
+  if(m){m.getContainer().style.cursor=on?'crosshair':'';if(on){try{$('liveMap').scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}}}
+  draw(false);
+}
+$('lnOn').onclick=function(){setLine(!lineMode)};
+$('lnNew').onclick=function(){cur=-1;drawLines();$('lnMsg').textContent='নতুন লাইন: পরের ট্যাপ থেকে আলাদা লাইন শুরু হবে।'};
+$('lnUndo').onclick=function(){var i=(cur>=0&&lines[cur])?cur:lines.length-1;if(i<0)return;lines[i].pop();if(!lines[i].length){lines.splice(i,1);cur=-1}lsave();drawLines()};
+$('lnClr').onclick=function(){if(lines.length&&confirm('সব আলাদা লাইন মুছে ফেলবেন?')){lines=[];cur=-1;lsave();drawLines()}};
+$('lnList').onclick=function(e){var t=e.target;if(t.getAttribute&&t.getAttribute('data-a')==='ldel'){var i=+t.getAttribute('data-i');lines.splice(i,1);cur=-1;lsave();drawLines()}};
 $('bdGo').onclick=collect;
 $('bdEdit').onclick=function(){setEdit(!editMode)};
-if(window.__liveMap&&!clickBound){window.__liveMap.on('click',function(e){if(!editMode)return;pts.push({la:e.latlng.lat,lo:e.latlng.lng,ac:0,m:true});save();draw(false)});clickBound=true}
+if(window.__liveMap&&!clickBound){window.__liveMap.on('click',function(e){if(lineMode){addLineVertex(e.latlng.lat,e.latlng.lng);return}if(!editMode)return;pts.push({la:e.latlng.lat,lo:e.latlng.lng,ac:0,m:true});save();draw(false)});clickBound=true}
 $('bdUndo').onclick=function(){pts.pop();save();draw(true)};
 $('bdClr').onclick=function(){if(pts.length&&confirm('সব পয়েন্ট মুছে ফেলবেন?')){pts=[];save();draw(false)}};
 $('bdCsv').onclick=function(){
@@ -625,6 +675,7 @@ $('bdCsv').onclick=function(){
   A=Math.abs(A)/2;
   L.push('');L.push('summary,value,unit');
   L.push('total_points,'+n+',');
+  lines.forEach(function(Ln,i){if(Ln.length>1){var ll_=llen(Ln);for(var q2=1;q2<Ln.length;q2++){L.push('line_'+(i+1)+'_segment_'+q2+'-'+(q2+1)+','+hav(Ln[q2-1],Ln[q2]).toFixed(2)+',m')}L.push('line_'+(i+1)+'_length,'+ll_.toFixed(2)+',m');L.push('line_'+(i+1)+'_length,'+(ll_*3.28084).toFixed(1)+',ft')}});
   (window.__diag||[]).forEach(function(x){L.push('diagonal_'+(x.i+1)+'-'+(x.j+1)+','+x.d.toFixed(2)+',m');L.push('diagonal_'+(x.i+1)+'-'+(x.j+1)+','+(x.d*3.28084).toFixed(1)+',ft')});
   if(n>1)L.push('perimeter,'+per.toFixed(2)+',m'),L.push('perimeter,'+(per*3.28084).toFixed(1)+',ft');
   if(n>2){L.push('area,'+A.toFixed(2)+',sq_m');L.push('area,'+(A/40.4686).toFixed(3)+',shatak');L.push('area,'+(A*10.7639).toFixed(1)+',sq_ft');}
