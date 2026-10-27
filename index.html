@@ -96,7 +96,7 @@ input[type=range]{width:100%;min-height:32px}
 <div class="btnrow"><button id="ndAfter" class="green">➕ এর পরে নতুন বিন্দু</button><button id="ndBefore" class="green">➕ এর আগে নতুন বিন্দু</button></div>
 <div class="btnrow"><button id="ndDel" class="secondary">🗑 এই বিন্দু মুছুন</button><button id="ndClose" class="secondary">নির্বাচন বাতিল</button></div>
 <div class="hint">যেমন ৭ ও ৮ নম্বরের মাঝে বিন্দু চাইলে ৭ নম্বরে ট্যাপ করে “এর পরে নতুন বিন্দু” চাপুন। নতুন বিন্দু দুই বিন্দুর ঠিক মাঝখানে বসবে ও নিজে নির্বাচিত হবে; তারপর টেনে বা তীর/দূরত্ব দিয়ে ঠিক জায়গায় বসান। পরের নম্বরগুলো নিজে থেকে এক ধাপ করে বেড়ে যাবে। শেষ বিন্দুর পরে চাপলে একই দিকে নতুন বিন্দু বাড়বে।</div></div>
-<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট <small style="font-weight:400;color:#167a55">(সংস্করণ ১৪: বিন্দুর পাশেই মুছুন/যোগ)</small></h2>
+<div class="section" id="bdBox" style="margin-top:10px;padding:10px;border:2px solid #167a55;border-radius:10px"><h2>জমির সীমানা — দ্রুত GPS পয়েন্ট <small style="font-weight:400;color:#167a55">(সংস্করণ ১৫: ক্যাড ক্যানভাসে পাঠান)</small></h2>
 <div class="hint" style="margin-top:0">কোণায় দাঁড়ান → বোতাম চাপুন → কয়েক সেকেন্ড স্থির থাকুন → পরের কোণায় যান। পয়েন্টগুলো ওপরের ম্যাপেও আঁকা হবে।</div>
 <div class="row" style="display:none"><div><label>দৈর্ঘ্যের একক</label><select id="uL"><option value="m">মিটার</option><option value="ft">ফুট</option><option value="in">ইঞ্চি</option><option value="cm">সেন্টিমিটার</option><option value="hat">হাত (১৮ ইঞ্চি)</option><option value="km">কিলোমিটার</option></select></div>
 <div><label>ক্ষেত্রফলের একক</label><select id="uA"><option value="shatak">শতক</option><option value="sqm">বর্গমিটার</option><option value="sqft">বর্গফুট</option><option value="katha">কাঠা (৭২০ বর্গফুট)</option><option value="bigha">বিঘা (২০ কাঠা)</option><option value="acre">একর</option><option value="ha">হেক্টর</option></select></div></div>
@@ -121,6 +121,11 @@ input[type=range]{width:100%;min-height:32px}
 <div style="overflow-x:auto"><table class="mc-table" style="width:100%"><tbody id="svList"></tbody></table></div>
 <div class="row"><div><label>ফাইল থেকে কাজ খুলুন (.json বা পুরোনো .csv)</label><input id="svImport" type="file" accept=".json,.csv,application/json,text/csv"></div></div>
 <div class="hint">“সংরক্ষণ করুন” এই ব্রাউজারেই থাকে (Incognito বা ক্যাশ মুছলে হারাবে)। স্থায়ী ব্যাকআপের জন্য “ফাইলে সংরক্ষণ” করে ফাইলটি Google Drive বা ফোনে রাখুন।</div></div>
+<div class="section" style="margin:10px 0;padding:10px;border:2px solid #167a55;border-radius:10px"><h3 style="margin:0 0 6px">📤 ক্যাড ফ্রেমে (ক্যানভাসে) পাঠান</h3>
+<div class="hint" style="margin-top:0">ম্যাপে আঁকা সীমানা, আলাদা লাইন, দূরত্বের লেখা ও পয়েন্টের নম্বর ওপরের ক্যাড ক্যানভাসে আসবে, আসল মাপসহ। স্কেল (পিক্সেল/মিটার) নিজে থেকে বসবে।</div>
+<label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="checkbox" id="cvBg" checked> স্যাটেলাইট ছবিও পেছনে বসান (ইন্টারনেট লাগবে)</label>
+<div class="btnrow"><button id="cvSend" class="green" style="width:100%;font-size:17px;padding:13px 16px">📤 ক্যাড ক্যানভাসে পাঠান</button></div>
+<div class="metrics" id="cvMsg" style="display:none"></div></div>
 <div class="section" style="margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:10px"><h3 style="margin:0 0 6px">📐 মাপের একক বদলান (ইঞ্চি, ফুট, সেমি, কাঠা, বিঘা…)</h3><div id="uQuick" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
 <div class="hint">৫ সেকেন্ডের গড় GPS-এর কাঁপুনি কমায়, কিন্তু ফোনের GPS-এ সাধারণত ১–৩ মিটার ভুল থাকে; ইঞ্চি-নির্ভুল নয়। আইনি/চূড়ান্ত মাপে ফিতা বা সার্ভেয়ার ব্যবহার করুন।</div></div><div class="hint">স্যাটেলাইট/হাইব্রিড টাইল: Esri World Imagery ও Reference labels; Google Maps নয়। র‍্যাস্টার মোডে আপনার নির্বাচিত ছবিটি ম্যাপের ওপর ওভারলে হিসেবে বসে—নির্ভুল জমি মাপের জন্য ছবিটির জিওরেফারেন্স/সীমানা মিলিয়ে নিতে হবে। ইমেজারি রিয়েল-টাইম নয় এবং সব এলাকার আপডেটের তারিখ এক নয়।</div></section>
 <div class="toolbar"><button id="fit" class="secondary">ছবি ফিট করুন</button><button id="reset" class="secondary">নতুন ক্যানভাস</button><span class="badge">Prototype 1.6 • Master Control • Access approval demo</span><span class="status" id="status">ছবি যোগ করুন অথবা খালি ক্যানভাসে আঁকুন</span></div><div class="canvasbox"><canvas id="canvas" width="1000" height="700"></canvas></div>
@@ -806,6 +811,61 @@ function selDelete(){
 $('ndAfter').onclick=function(){selInsert(true)};
 $('ndBefore').onclick=function(){selInsert(false)};
 $('ndDel').onclick=selDeleteAsk;
+
+function cvMsg(t){var m=$('cvMsg');m.style.display='';m.textContent=t}
+function merc(la,lo){var Z=256*131072,x=(lo+180)/360*Z,r=la*Math.PI/180,y=(0.5-Math.log(Math.tan(Math.PI/4+r/2))/(2*Math.PI))*Z;return{x:x,y:y}}
+function loadTile(z,x,y){return new Promise(function(res){
+  var im=new Image();im.crossOrigin='anonymous';var done=false;
+  function fin(v){if(!done){done=true;res(v)}}
+  im.onload=function(){fin(im)};im.onerror=function(){fin(null)};setTimeout(function(){fin(null)},9000);
+  im.src='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/'+z+'/'+y+'/'+x;
+})}
+async function buildBg(cx,cy,f,W,H){
+  var zt=Math.max(8,Math.min(17,Math.floor(17+Math.log2(f)))),k=Math.pow(2,17-zt),st=f*k;
+  var ox=cx/k-(W/2)/st,oy=cy/k-(H/2)/st,x0=Math.floor(ox/256),x1=Math.floor((ox+W/st)/256),y0=Math.floor(oy/256),y1=Math.floor((oy+H/st)/256);
+  if((x1-x0+1)*(y1-y0+1)>36)return null;
+  var cv=document.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d');g.fillStyle='#e5e7eb';g.fillRect(0,0,W,H);
+  var jobs=[],t,u;
+  for(t=x0;t<=x1;t++)for(u=y0;u<=y1;u++)(function(tx,ty){jobs.push(loadTile(zt,tx,ty).then(function(im){if(im)g.drawImage(im,(tx*256-ox)*st,(ty*256-oy)*st,256*st+1,256*st+1);return !!im}))})(t,u);
+  var ok=await Promise.all(jobs);
+  return ok.some(Boolean)?cv:null;
+}
+async function sendToCad(){
+  var cvs=document.getElementById('canvas');
+  if(!cvs||typeof objects==='undefined'){cvMsg('⚠️ ক্যাড ক্যানভাস পাওয়া যায়নি।');return}
+  if(!pts.length&&!lines.some(function(L){return L.length>1})){cvMsg('আগে সীমানার পয়েন্ট বা লাইন আঁকুন।');return}
+  var W=cvs.width,H=cvs.height,all=[];
+  pts.forEach(function(p){all.push(p)});lines.forEach(function(L){L.forEach(function(p){all.push(p)})});
+  var mx=all.map(function(p){return merc(p.la,p.lo)}),minx=Math.min.apply(null,mx.map(function(m){return m.x})),maxx=Math.max.apply(null,mx.map(function(m){return m.x})),
+      miny=Math.min.apply(null,mx.map(function(m){return m.y})),maxy=Math.max.apply(null,mx.map(function(m){return m.y}));
+  var bw=Math.max(maxx-minx,40),bh=Math.max(maxy-miny,40),cx=(minx+maxx)/2,cy=(miny+maxy)/2,f=Math.min(W*0.78/bw,H*0.78/bh);
+  var latc=all.reduce(function(a,p){return a+p.la},0)/all.length,mpp17=156543.03392*Math.cos(latc*Math.PI/180)/131072,ppmv=f/mpp17;
+  var Zw=256*131072,clo=cx/Zw*360-180,cla=(2*Math.atan(Math.exp(Math.PI*(1-2*cy/Zw)))-Math.PI/2)*180/Math.PI,ckx=111320*Math.cos(cla*Math.PI/180);
+  function cp(p){return{x:(p.lo-clo)*ckx*ppmv+W/2,y:-(p.la-cla)*110574*ppmv+H/2}}
+  var out=objects.filter(function(o){return !o.gps}),add=function(o){o.gps=true;out.push(o)};
+  var P=pts.map(cp),n=P.length,i,j;
+  if(n>2)add({type:'polygon',points:P.map(function(p){return{x:p.x,y:p.y}}),color:'#e0a100'});
+  else if(n===2)add({type:'line',points:[P[0],P[1]],color:'#e0a100'});
+  if(n>1){var q=proj();for(i=0;i<n;i++){j=(i+1)%n;if(n===2&&i===1)break;var d=Math.hypot(q[j].x-q[i].x,q[j].y-q[i].y);add({type:'text',x:(P[i].x+P[j].x)/2+4,y:(P[i].y+P[j].y)/2-4,text:fL(d,1),size:15,color:'#16261c'})}}
+  P.forEach(function(p,k){add({type:'text',x:p.x+6,y:p.y-8,text:bn(k+1,0),size:17,color:'#b3261e'})});
+  if(n>2){var q2=proj(),A=0;for(i=0;i<n;i++){j=(i+1)%n;A+=q2[i].x*q2[j].y-q2[j].x*q2[i].y}A=Math.abs(A)/2;
+    var gx=P.reduce(function(a,p){return a+p.x},0)/n,gy=P.reduce(function(a,p){return a+p.y},0)/n;
+    add({type:'text',x:gx-40,y:gy,text:'ক্ষেত্রফল '+fA(A),size:16,color:'#0f5233'})}
+  lines.forEach(function(Ln){var L2=Ln.map(cp);for(i=1;i<L2.length;i++){add({type:'line',points:[L2[i-1],L2[i]],color:'#7c3aed'});
+    add({type:'text',x:(L2[i-1].x+L2[i].x)/2+4,y:(L2[i-1].y+L2[i].y)/2-4,text:fL(hav(Ln[i-1],Ln[i]),1),size:14,color:'#7c3aed'})}});
+  cvMsg('⏳ ক্যানভাসে পাঠানো হচ্ছে…');
+  var bgNote='';
+  if($('cvBg').checked){
+    try{var bg=await buildBg(cx,cy,f,W,H);if(bg){baseImg=bg;bgNote=' স্যাটেলাইট ছবিসহ।'}else bgNote=' (স্যাটেলাইট ছবি আনা যায়নি, শুধু আঁকা বসেছে।)'}catch(e){bgNote=' (স্যাটেলাইট ছবি আনা যায়নি, শুধু আঁকা বসেছে।)'}
+  }
+  objects=out;
+  var pp=$('ppm');pp.value=ppmv.toFixed(4);try{pp.dispatchEvent(new Event('input',{bubbles:true}));pp.dispatchEvent(new Event('change',{bubbles:true}))}catch(e){}
+  if(typeof updateMetrics==='function'){try{updateMetrics()}catch(e){}}
+  window.draw();
+  cvMsg('✅ ক্যাড ক্যানভাসে পাঠানো হয়েছে।'+bgNote+' স্কেল: '+ppmv.toFixed(2)+' পিক্সেল/মিটার। আবার পাঠালে আগের পাঠানো আঁকা বদলে যাবে।');
+  try{cvs.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}
+}
+$('cvSend').onclick=sendToCad;
 $('bdGo').onclick=collect;
 $('bdEdit').onclick=function(){setEdit(!editMode)};
 if(window.__liveMap&&!clickBound){window.__liveMap.on('click',function(e){if(lineMode){addLineVertex(e.latlng.lat,e.latlng.lng);return}if(!editMode)return;pts.push({la:e.latlng.lat,lo:e.latlng.lng,ac:0,m:true});save();draw(false)});clickBound=true}
